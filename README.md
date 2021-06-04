@@ -22,6 +22,11 @@ Toutes les commandes musiques en une !
 7. Et voilà plus qu'à modifier ton code pour le personnaliser à ton goût !
 
 
+## ⌨ | Code
+
+Le code est dans le fichier [index.js](https://github.com/KillerJumper/Bot-music-code/blob/main/index.js).
+
+
 ## 👥 | Contact
 
 Si tu as une erreur mentionne moi sur le serveur de GeezMokeZ ou rejoins mon serveur et prends le rôle développeur grâce au ticket ou mp moi !
