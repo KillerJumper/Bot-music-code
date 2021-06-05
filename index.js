@@ -58,6 +58,7 @@ client.on("message", async message => {
         let aleatoire = new disbut.MessageButton().setStyle('gray').setID('shuffle').setLabel('🔀'); //Bouton random
         let queu = new disbut.MessageButton().setStyle('gray').setID('list').setLabel('💿'); // Bouton list music
         //Assemblage de bouton
+        let lister = new disbut.MessageButton().addComponent(queu);
         let pause = new disbut.MessageActionRow().addComponent(play).addComponent(suivant).addComponent(repeat).addComponent(aleatoire).addComponent(stop);// Musique jouée
         let pauserepeat = new disbut.MessageActionRow().addComponent(play).addComponent(suivant).addComponent(repeat1).addComponent(aleatoire).addComponent(stop);//Musique répété
         let reprendre = new disbut.MessageActionRow().addComponent(rplay).addComponent(suivant).addComponent(repeat).addComponent(aleatoire).addComponent(stop);//Musique pause
@@ -69,7 +70,7 @@ client.on("message", async message => {
                 .setTitle('**MUSIQUES**')
                 .setDescription(`Je joue de la musique !`)
                 .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
-            const send_play = await message.channel.send({embed: embed, components: [pause, queu]}); // Envoie de l'embed et du bouton
+            const send_play = await message.channel.send({embed: embed, components: [pause, lister]}); // Envoie de l'embed et du bouton
             const filter = (button) => button.clicker.user.id == message.author.id; // Les boutons marche que pour l'auteur du message
             const collector = send_play.createButtonCollector(filter); // Création du collector de bouton
             collector.on('collect', b =>{
@@ -87,7 +88,7 @@ client.on("message", async message => {
                     .setTitle('**MUSIQUES**')
                     .setDescription(`La musique est en pause !`)
                     .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
-                    send_play.edit({embed: embedpause, components: [reprendre, queu]});
+                    send_play.edit({embed: embedpause, components: [reprendre, lister]});
                     distube.pause(message);
                 }
                 function reprendr(){ //Fonction resume
@@ -101,7 +102,7 @@ client.on("message", async message => {
                         .setTitle('**MUSIQUES**')
                         .setDescription(`Je reprend la musique en pause !`)
                         .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
-                    send_play.edit({embed: embedreprendre, components: [pause, queu]});
+                    send_play.edit({embed: embedreprendre, components: [pause, lister]});
                     distube.resume(message);
                 }
                 function leave(){ //Fonction leave
@@ -132,7 +133,7 @@ client.on("message", async message => {
                         .setTitle('**MUSIQUES**')
                         .setDescription(`Je passe à la prochaine musique chef !`)
                         .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
-                        send_play.edit({embed: embedskip, components: [pause, queu]});
+                        send_play.edit({embed: embedskip, components: [pause, lister]});
                     distube.skip(message);
                 }
                 function loop(){ //Fonction loop
@@ -152,7 +153,7 @@ client.on("message", async message => {
                     .setTitle('**MUSIQUES**')
                     .setDescription(`Je répète la musique 1 fois !`)
                     .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
-                    send_play.edit({embed: embedloop, components: [pauserepeat, queu]});
+                    send_play.edit({embed: embedloop, components: [pauserepeat, lister]});
                     distube.setRepeatMode(message, parseInt(1));
                 }
                 function loop1(){ //Fonction off-loop
@@ -172,7 +173,7 @@ client.on("message", async message => {
                     .setTitle('**MUSIQUES**')
                     .setDescription(`Répétition remise à 0 !`)
                     .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
-                    send_play.edit({embed: embedloop1, components: [pause, queu]});
+                    send_play.edit({embed: embedloop1, components: [pause, lister]});
                     distube.setRepeatMode(message, parseInt(0));
                 }
                 function shuffle(){ //Fonction aléatoire
@@ -197,7 +198,7 @@ client.on("message", async message => {
                     .setTitle('**MUSIQUES**')
                     .setDescription(`Mode aléatoire activé !`)
                     .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
-                    send_play.edit({embed: embedshuffle, components: [pause, queu]});
+                    send_play.edit({embed: embedshuffle, components: [pause, lister]});
                     distube.shuffle(message);
                 }
                 function liste(){ //Fonction list music
