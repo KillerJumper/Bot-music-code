@@ -58,7 +58,7 @@ client.on("message", async message => {
         let aleatoire = new disbut.MessageButton().setStyle('gray').setID('shuffle').setLabel('🔀'); //Bouton random
         let queu = new disbut.MessageButton().setStyle('gray').setID('list').setLabel('💿'); // Bouton list music
         //Assemblage de bouton
-        let lister = new disbut.MessageButton().addComponent(queu);
+        let lister = new disbut.MessageActionRow().addComponent(queu);
         let pause = new disbut.MessageActionRow().addComponent(play).addComponent(suivant).addComponent(repeat).addComponent(aleatoire).addComponent(stop);// Musique jouée
         let pauserepeat = new disbut.MessageActionRow().addComponent(play).addComponent(suivant).addComponent(repeat1).addComponent(aleatoire).addComponent(stop);//Musique répété
         let reprendre = new disbut.MessageActionRow().addComponent(rplay).addComponent(suivant).addComponent(repeat).addComponent(aleatoire).addComponent(stop);//Musique pause
