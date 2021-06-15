@@ -17,6 +17,8 @@ const disbut = require('discord-buttons');
 disbut(client);
 const { getTracks, getPreview } = require("spotify-url-info");
 
+const prefix = "!";
+
 client.on("ready", async () =>{
 const statuses = [
   'Joue de la musique',
