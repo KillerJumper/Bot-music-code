@@ -76,7 +76,7 @@ client.on("message", async message => {
             const filter = (button) => button.clicker.user.id == message.author.id; // Les boutons marche que pour l'auteur du message
             const collector = send_play.createButtonCollector(filter); // Création du collector de bouton
             collector.on('collect', b =>{
-                b.defer();
+                b.reply.defer();
 
                 // Fonction des actions
                 function paus(){ //Fonction pause
