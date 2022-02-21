@@ -39,7 +39,7 @@ Le code est compris de la commande musique normal avec un préfix et une autre e
 
 ## 👥 | Contact
 
-Si tu as une erreur mentionne moi sur le serveur de GeezMokeZ ou rejoins mon serveur et prends le rôle développeur grâce au ticket ou mp moi !
+Si tu as une erreur rejoint mon serveur et prends le rôle développeur grâce au ticket ou mp moi !
 
 <div align="center">
   <p>
