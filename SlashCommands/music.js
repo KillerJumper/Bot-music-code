@@ -6,6 +6,14 @@ var list = [];
 module.exports = {
     name: "play",
     description: "Système de musique complet !",
+    options: [
+        {
+            name: "musique",
+            description: "Indique la musique à jouer !",
+            type: "STRING",
+            required: true
+        }
+    ],
     type: 'CHAT_INPUT',
     /**
      *
@@ -14,7 +22,8 @@ module.exports = {
      * @param {String[]} args
      */
     run: async (bot, interaction, args) =>{
-        const argsradio = args.slice(0).join("").toLowerCase();
+        const {options} = interaction;
+        const argsradio = options.getString("musique").toLowerCase();
         const VoiceChannel = interaction.member.voice.channel;
         const meVoiceChannel = interaction.guild.me.voice.channel;
 
@@ -42,8 +51,8 @@ module.exports = {
                 list.push(argsradio);
                 spotifymusic();
 
-                let songName = args.slice(0).join(" ");
-                i.distube.play(interaction, songName);
+                let songName = options.getString("musique");
+                i.distube.play(VoiceChannel, songName);
                 interaction.reply({content: 'Musique ajouté à la file d\'attente.', ephemeral: true});
         }
         if (list.length < 1) {
@@ -56,17 +65,18 @@ module.exports = {
                     .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
 
                 spotifymusic();
-                let songName = args.slice(0).join(" ");
-                i.distube.play(message, songName);
-                    const send_play = await interaction.reply({embeds: [embed], components: [pause, lister], ephemeral: false});
+                let songName = options.getString("musique");
+                i.distube.play(VoiceChannel, songName);
+                    interaction.reply({content: "La musique se lance !", ephemeral: true});
+                    const send_play = await interaction.channel.send({embeds: [embed], components: [pause, lister]});
                     const collector = send_play.createMessageComponentCollector(send_play);
                     collector.on('collect', b =>{
                         b.deferUpdate();
 
                         function paus(){
-                            if(b.user.id != interaction.author.id) return;
-                            let queue = i.distube.getQueue(interaction);
-                            if (!queue.songs[0]) return interaction.reply({content: "ERREUR: Aucune prochaine musique.", ephemeral: true});
+                            if(b.user.id != interaction.user.id) return;
+                            let queue = i.distube.getQueue(VoiceChannel);
+                            if (!queue.songs[0]) return interaction.editReply({content: "ERREUR: Aucune prochaine musique.", ephemeral: true});
 
                             let embedpause = new MessageEmbed()
                             .setColor("RED")
@@ -74,12 +84,12 @@ module.exports = {
                             .setDescription(`La musique est en pause !`)
                             .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
                             send_play.edit({embeds: [embedpause], components: [reprendre, lister]});
-                            i.distube.pause(interaction);
+                            i.distube.pause(VoiceChannel);
                         }
                         function reprendr(){
-                            if(b.user.id != interaction.author.id) return;
-                            let queue = i.distube.getQueue(interaction);
-                            if (!queue.songs[0]) return interaction.reply({content: "ERREUR: Aucune prochaine musique.", ephemeral: true});
+                            if(b.user.id != interaction.user.id) return;
+                            let queue = i.distube.getQueue(VoiceChannel);
+                            if (!queue.songs[0]) return interaction.editReply({content: "ERREUR: Aucune prochaine musique.", ephemeral: true});
 
                             let embedreprendre = new MessageEmbed()
                                 .setColor("RED")
@@ -87,12 +97,12 @@ module.exports = {
                                 .setDescription(`Je reprend la musique en pause !`)
                                 .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
                             send_play.edit({embeds: [embedreprendre], components: [pause, lister]});
-                            i.distube.resume(interaction);
+                            i.distube.resume(VoiceChannel);
                         }
                         function leave(){
-                            if(b.user.id != interaction.author.id) return;
+                            if(b.user.id != interaction.user.id) return;
                             if(meVoiceChannel == VoiceChannel) return;
-                            let queue = i.distube.getQueue(interaction);
+                            let queue = i.distube.getQueue(VoiceChannel);
                             
                             let embedleave = new MessageEmbed()
                                 .setColor("RED")
@@ -103,25 +113,25 @@ module.exports = {
                             if (!queue.songs[0]) return send_play.edit({embeds: [embedleave], components: []});
                             
                             send_play.edit({embeds: [embedleave], components: []});
-                            i.distube.stop(interaction);
+                            i.distube.stop(VoiceChannel);
                             list = [];
                         }
                         function skipped(){
-                            if(b.user.id != interaction.author.id) return;
-                            let queue = i.distube.getQueue(interaction);
-                            if (!queue.songs[1]) return interaction.reply({content: "ERREUR: Aucune prochaine musique.", ephemeral: true});
+                            if(b.user.id != interaction.user.id) return;
+                            let queue = i.distube.getQueue(VoiceChannel);
+                            if (!queue.songs[1]) return interaction.editReply({content: "ERREUR: Aucune prochaine musique.", ephemeral: true});
                             let embedskip = new MessageEmbed()
                                 .setColor("RED")
                                 .setTitle('**MUSIQUES**')
                                 .setDescription(`Je passe à la prochaine musique chef !`)
                                 .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
                                 send_play.edit({embeds: [embedskip], components: [pause, lister]});
-                                i.distube.skip(interaction);
+                                i.distube.skip(VoiceChannel);
                         }
                         function loop(){
-                            if(b.user.id !=interaction.author.id) return;
-                            let queue = i.distube.getQueue(interaction);
-                            if (!queue.songs[0]) return interaction.reply({content: "ERREUR: Aucune prochaine musique.", ephemeral: true});
+                            if(b.user.id !=interaction.user.id) return;
+                            let queue = i.distube.getQueue(VoiceChannel);
+                            if (!queue.songs[0]) return interaction.editReply({content: "ERREUR: Aucune prochaine musique.", ephemeral: true});
                            
                             let embedloop = new MessageEmbed()
                             .setColor("RED")
@@ -129,12 +139,12 @@ module.exports = {
                             .setDescription(`Je joue la musique en boucle !`)
                             .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
                             send_play.edit({embeds: [embedloop], components: [pauserepeat, lister]});
-                            i.distube.setRepeatMode(interaction, parseInt(1));
+                            i.distube.setRepeatMode(VoiceChannel, parseInt(1));
                         }
                         function loop1(){
-                            if(b.user.id != interaction.author.id) return;
-                            let queue = i.distube.getQueue(interaction);
-                            if (!queue.songs[0]) return interaction.reply({content: "ERREUR: La liste est vide.", ephemeral: true});
+                            if(b.user.id != interaction.user.id) return;
+                            let queue = i.distube.getQueue(VoiceChannel);
+                            if (!queue.songs[0]) return interaction.editReply({content: "ERREUR: La liste est vide.", ephemeral: true});
         
                             let embedloop1 = new MessageEmbed()
                             .setColor("RED")
@@ -142,12 +152,12 @@ module.exports = {
                             .setDescription(`J'arrête de jouer la musique en boucle !`)
                             .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
                             send_play.edit({embeds: [embedloop1], components: [pause, lister]});
-                            i.distube.setRepeatMode(interaction, parseInt(0));
+                            i.distube.setRepeatMode(VoiceChannel, parseInt(0));
                         }
                         function shuffle(){
-                            if(b.user.id != interaction.author.id) return;
-                            let queue = i.distube.getQueue(interaction);
-                            if (!queue.songs[5]) return interaction.reply({content: "ERREUR: La liste est pas assez rempli pour le mode aléatoire !", ephemeral: true});
+                            if(b.user.id != interaction.user.id) return;
+                            let queue = i.distube.getQueue(VoiceChannel);
+                            if (!queue.songs[5]) return interaction.editReply({content: "ERREUR: La liste est pas assez rempli pour le mode aléatoire !", ephemeral: true});
             
                             let embedshuffle = new MessageEmbed()
                             .setColor("RED")
@@ -155,11 +165,11 @@ module.exports = {
                             .setDescription(`Mode aléatoire activé !`)
                             .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
                             send_play.edit({embeds: [embedshuffle], components: [pause, lister]});
-                            i.distube.shuffle(interaction);
+                            i.distube.shuffle(VoiceChannel);
                         }
                         function liste(){
-                            let queue = i.distube.getQueue(interaction);
-                            if (!queue.songs[0]) return interaction.reply({content: "ERREUR: La liste est vide", ephemeral: true});
+                            let queue = i.distube.getQueue(VoiceChannel);
+                            if (!queue.songs[0]) return interaction.editReply({content: "ERREUR: La liste est vide", ephemeral: true});
 
                             let embedsc = queue.songs.map((song, index) => {
                                 return `${index+1} [${song.name}](${song.url}) - \`${song.formattedDuration}\``
@@ -186,13 +196,13 @@ module.exports = {
         function spotifymusic(){
             if(argsradio.includes("spotify") && argsradio.includes("track")){
                 getPreview(args.slice(0).join(" ")).then(result => {
-                    i.distube.play(interaction, result.title);
+                    i.distube.play(VoiceChannel, result.title);
                 })
             }
             if(argsradio.includes("spotify") && argsradio.includes("playlist")){
                 getTracks(args.slice(0).join(" ")).then(result => {
                     for(const song of result)
-                    i.distube.play(interaction, song.name);
+                    i.distube.play(VoiceChannel, song.name);
                 })
             }
         }
