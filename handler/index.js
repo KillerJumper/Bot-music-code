@@ -9,7 +9,7 @@ const globPromise = promisify(glob);
  */
 module.exports = async (bot) => {
     // Commands
-    const commands = await globPromise(`${process.cwd()}/commands/*/*.js`);
+    const commands = await globPromise(`${process.cwd()}/commands/**/*.js`);
     commands.map((value) => {
         const file = require(value);
         const splitted = value.split("/");
@@ -22,12 +22,12 @@ module.exports = async (bot) => {
     });
 
     // Events
-    const eventFiles = await globPromise(`${process.cwd()}/events/*/*.js`);
+    const eventFiles = await globPromise(`${process.cwd()}/events/**/*.js`);
     eventFiles.map((value) => require(value));
 
     // Slash Commands
     const slashCommands = await globPromise(
-        `${process.cwd()}/SlashCommands/*/*.js`
+        `${process.cwd()}/SlashCommands/**/*.js`
     );
 
     const arrayOfSlashCommands = [];
