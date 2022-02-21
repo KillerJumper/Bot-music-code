@@ -111,12 +111,7 @@ module.exports = {
                                 .setDescription(`J'arrête de jouer de la musique !`)
                                 .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
                             
-                            if (!queue.songs[0]) return message.channel.send("ERREUR: Aucune prochaine musique.").then((file) =>{
-                                setTimeout(()=> {
-                                    file.delete();
-                                    send_play.edit({embeds: [embedleave], components: []});
-                                }, 5000);
-                            });
+                            if (!queue.songs[0]) return send_play.edit({embeds: [embedleave], components: []});
                             
                             send_play.edit({embeds: [embedleave], components: []});
                             i.distube.stop(message);
