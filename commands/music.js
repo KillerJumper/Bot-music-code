@@ -4,7 +4,7 @@ const { getTracks, getPreview } = require("spotify-url-info");
 var list = [];
 
 module.exports = {
-    name: "testplay",
+    name: "play",
     description: "Commande musique complète !",
     /**
 //      * 
