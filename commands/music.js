@@ -4,7 +4,7 @@ const { getTracks, getPreview } = require("spotify-url-info");
 var list = [];
 
 module.exports = {
-    name: "play",
+    name: "testplay",
     run: async (bot, message, args) => {
         const argsradio = args.slice(0).join("").toLowerCase();
         const VoiceChannel = message.member.voice.channel;
@@ -61,6 +61,12 @@ module.exports = {
 
                         function paus(){
                             if(b.user.id != message.author.id) return;
+                            let queue = i.distube.getQueue(message);
+                            if (!queue.songs[0]) return message.channel.send("ERREUR: Aucune prochaine musique.").then((file) =>{
+                                setTimeout(()=> {
+                                    file.delete();
+                                }, 5000);
+                            });
 
                             let embedpause = new MessageEmbed()
                             .setColor("RED")
@@ -72,6 +78,12 @@ module.exports = {
                         }
                         function reprendr(){
                             if(b.user.id != message.author.id) return;
+                            let queue = i.distube.getQueue(message);
+                            if (!queue.songs[0]) return message.channel.send("ERREUR: Aucune prochaine musique.").then((file) =>{
+                                setTimeout(()=> {
+                                    file.delete();
+                                }, 5000);
+                            });
 
                             let embedreprendre = new MessageEmbed()
                                 .setColor("RED")
@@ -84,6 +96,12 @@ module.exports = {
                         function leave(){
                             if(b.user.id != message.author.id) return;
                             if(meVoiceChannel == VoiceChannel) return;
+                            let queue = i.distube.getQueue(message);
+                            if (!queue.songs[0]) return message.channel.send("ERREUR: Aucune prochaine musique.").then((file) =>{
+                                setTimeout(()=> {
+                                    file.delete();
+                                }, 5000);
+                            });
                             
                             let embedleave = new MessageEmbed()
                                 .setColor("RED")
@@ -113,7 +131,7 @@ module.exports = {
                         function loop(){
                             if(b.user.id != message.author.id) return;
                             let queue = i.distube.getQueue(message);
-                            if (!queue.songs[1]) return message.channel.send("ERREUR: La liste est vide !").then((file) =>{
+                            if (!queue.songs[0]) return message.channel.send("ERREUR: La liste est vide !").then((file) =>{
                                 setTimeout(()=> {
                                     file.delete();
                                 }, 5000);
@@ -130,7 +148,7 @@ module.exports = {
                         function loop1(){
                             if(b.user.id != message.author.id) return;
                             let queue = i.distube.getQueue(message);
-                            if (!queue.songs[1]) return message.channel.send("ERREUR: La liste est vide !").then((file) =>{
+                            if (!queue.songs[0]) return message.channel.send("ERREUR: La liste est vide !").then((file) =>{
                                 setTimeout(()=> {
                                     file.delete();
                                 }, 5000);
@@ -163,7 +181,7 @@ module.exports = {
                         }
                         function liste(){
                             let queue = i.distube.getQueue(message);
-                            if (!queue.songs[1]) return message.channel.send("ERREUR: La liste est vide !").then((file) =>{
+                            if (!queue.songs[0]) return message.channel.send("ERREUR: La liste est vide !").then((file) =>{
                                 setTimeout(()=> {
                                     file.delete();
                                 }, 5000);
