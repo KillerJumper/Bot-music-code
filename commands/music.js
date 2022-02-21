@@ -1,5 +1,5 @@
 const {MessageEmbed, MessageButton, MessageActionRow} = require('discord.js'),
-i = require('../../index');
+i = require('../index');
 const { getTracks, getPreview } = require("spotify-url-info");
 var list = [];
 
