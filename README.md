@@ -26,7 +26,7 @@ Toutes les commandes musiques en une !
       Pour la commande Slash il faut impérativement allez sur ce lien en inscrivant l'id de votre bot à la place de `id_bot`
       Lien: https://discord.com/developers/applications/id_bot/oauth2/url-generator
 
-      Et il faudra générer une invitation en cochant la case bot et application.commands.
+      Et il faudra générer une invitation en cochant la case bot et applications.commands.
       Et ensuite cochez les permissions normalement.
       Puis plus qu'à inviter le bot dans tes serveurs !
 ⚠️⚠️
