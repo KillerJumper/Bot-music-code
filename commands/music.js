@@ -1,11 +1,11 @@
-const {Client, Message, MessageEmbed, MessageButton, MessageActionRow} = require('discord.js'),
-i = require('../index');
+const {MessageEmbed, MessageButton, MessageActionRow} = require('discord.js'),
+i = require('../../index');
 const { getTracks, getPreview } = require("spotify-url-info");
 var list = [];
 
 module.exports = {
     name: "play",
-    description: "Commande musique complète !",
+    description: "Système de musique complet !",
     /**
 //      * 
 //      * @param {Client} bot 
@@ -104,17 +104,20 @@ module.exports = {
                             if(b.user.id != message.author.id) return;
                             if(meVoiceChannel == VoiceChannel) return;
                             let queue = i.distube.getQueue(message);
-                            if (!queue.songs[0]) return message.channel.send("ERREUR: Aucune prochaine musique.").then((file) =>{
-                                setTimeout(()=> {
-                                    file.delete();
-                                }, 5000);
-                            });
                             
                             let embedleave = new MessageEmbed()
                                 .setColor("RED")
                                 .setTitle('**MUSIQUES**')
                                 .setDescription(`J'arrête de jouer de la musique !`)
                                 .setFooter('Profite de ta musique !!', "https://media.discordapp.net/attachments/732877745683693588/808011310784184330/ezgif-2-e3f0773857a2.gif")
+                            
+                            if (!queue.songs[0]) return message.channel.send("ERREUR: Aucune prochaine musique.").then((file) =>{
+                                setTimeout(()=> {
+                                    file.delete();
+                                    send_play.edit({embeds: [embedleave], components: []});
+                                }, 5000);
+                            });
+                            
                             send_play.edit({embeds: [embedleave], components: []});
                             i.distube.stop(message);
                             list = [];
