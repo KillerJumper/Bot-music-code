@@ -15,8 +15,8 @@ Toutes les commandes musiques en une !
 1. Installe node.js
 2. Copie ou télécharge mon code sur ton pc
 3. Installe le module [discord.js](https://discord.js.org/#/) avec `npm i discord.js`
-4. Installe le module [distube](https://www.npmjs.com/package/distube) avec `npm i distube`
-5. Installe le module [discord-buttons](https://www.npmjs.com/package/discord-buttons) avec `npm i discord-buttons`
+4. Installe les modules glob avec `npm i glob` et util avec `npm i util`
+5. Installe le module [distube](https://www.npmjs.com/package/distube) avec `npm i distube`
 6. Installe le module [spotify-url-info](https://www.npmjs.com/package/spotify-url-info) avec `npm i spotify-url-info`
 6. Avec le module distube il faut installer les modules [ffmpeg-static](https://www.npmjs.com/package/ffmpeg-static) et [@discordjs/opus](https://www.npmjs.com/package/@discordjs/opus) `npm i ffmpeg-static`, `npm i @discordjs/opus`
 7. Et voilà plus qu'à modifier ton code pour le personnaliser à ton goût !
@@ -24,7 +24,7 @@ Toutes les commandes musiques en une !
 
 ## ⌨ | Code
 
-Le code est dans le fichier [index.js](https://github.com/KillerJumper/Bot-music-code/blob/main/index.js).
+Le code est compris de la commande musique normal avec un préfix et une autre en slashCommands.
 
 
 ## 👥 | Contact
