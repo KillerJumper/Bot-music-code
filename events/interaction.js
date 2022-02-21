@@ -1,4 +1,4 @@
-const bot = require("../../index");
+const bot = require("../index");
 
 bot.on('interactionCreate', async (interaction) => {
     // Slash Command Handling
