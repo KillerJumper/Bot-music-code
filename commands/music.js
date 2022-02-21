@@ -1,10 +1,17 @@
-const {MessageEmbed, MessageButton, MessageActionRow} = require('discord.js'),
+const {Client, Message, MessageEmbed, MessageButton, MessageActionRow} = require('discord.js'),
 i = require('../index');
 const { getTracks, getPreview } = require("spotify-url-info");
 var list = [];
 
 module.exports = {
     name: "testplay",
+    description: "Commande musique complète !",
+    /**
+//      * 
+//      * @param {Client} bot 
+//      * @param {Message} message 
+//      * @param {String[]} args 
+//      */
     run: async (bot, message, args) => {
         const argsradio = args.slice(0).join("").toLowerCase();
         const VoiceChannel = message.member.voice.channel;
