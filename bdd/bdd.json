@@ -1,3 +1,5 @@
 {
-  "token": "" // Ici inscrit le token de ton bot !
+  "token": "",
+  "prefix": "!"
 }
+// Ici inscrit le token de ton bot !
