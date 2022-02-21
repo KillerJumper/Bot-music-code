@@ -1,6 +1,7 @@
 const Discord = require('discord.js'),
     bot = new Discord.Client({
         intents: [
+            Discord.Intents.FLAGS.GUILDS,
             Discord.Intents.FLAGS.GUILD_VOICE_STATES
         ]
     }),
