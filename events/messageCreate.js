@@ -1,5 +1,5 @@
-const bot = require('../../index');
-const bdd = require('../../bdd/bdd.json');
+const bot = require('../index');
+const bdd = require('../bdd/bdd.json');
 
 bot.on('messageCreate', (message) => {
     if (message.type !== 'DEFAULT') return;
